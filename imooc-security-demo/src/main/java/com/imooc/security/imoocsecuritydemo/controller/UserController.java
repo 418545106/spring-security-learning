@@ -18,9 +18,9 @@ public class UserController {
     @GetMapping("/user")
     public List<User> query(){
         List<User> users = new ArrayList<>();
-        users.add(new User());
-        users.add(new User());
-        users.add(new User());
+        users.add(new User("uuz","1"));
+        users.add(new User("uuz","1"));
+        users.add(new User("uuz","1"));
         return users;
     }
 
