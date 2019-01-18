@@ -35,8 +35,11 @@ public class UserController {
 
     @GetMapping("/{userId:\\d+}")
     @JsonView(User.UserDetailView.class)
-    public User getInfo(@PathVariable Long userId){
-        User user = new User();
+    public User getInfo(@PathVariable Long userId) throws Exception {
+
+        logger.info("--method parameter:{}",userId);
+
+        User user =   new User();
         user.setPassword("123456");
         user.setUserName("uuz");
         return user;
