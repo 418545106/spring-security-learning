@@ -1,9 +1,11 @@
 package com.imooc.security.imoocsecuritydemo.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.imooc.security.imoocsecuritybrowser.service.TestService;
 import com.imooc.security.imoocsecuritydemo.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,9 @@ import java.util.List;
 public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    private TestService testService;
 
     @GetMapping
     @JsonView(User.UserSimpleView.class)
@@ -46,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody User user/*, BindingResult errors*/){
+    public User create(/*@Valid*/ @RequestBody User user/*, BindingResult errors*/){
 
         /*if(errors.hasErrors()){
             errors.getAllErrors().stream().forEach(error -> {
@@ -79,5 +84,11 @@ public class UserController {
     @DeleteMapping("/{userId:\\d+}")
     public void delete(@PathVariable Long userId){
         logger.info("--------------->delete id : {}",userId);
+    }
+
+    @GetMapping("/test")
+    public void test(){
+        String str = testService.testFunction();
+        logger.info("###################### {}",str);
     }
 }

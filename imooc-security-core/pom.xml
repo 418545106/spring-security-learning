@@ -7,15 +7,14 @@
         <groupId>com.imooc.security</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.imooc.security</groupId>
     <artifactId>imooc-security-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>imooc-security-core</name>
     <description>Demo project for Spring Boot</description>
-
+    <packaging>jar</packaging>
     <properties>
         <java.version>1.8</java.version>
-    </properties>
+    </properties>s
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
