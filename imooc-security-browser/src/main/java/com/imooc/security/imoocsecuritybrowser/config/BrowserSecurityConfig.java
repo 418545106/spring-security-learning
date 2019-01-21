@@ -1,6 +1,7 @@
 package com.imooc.security.imoocsecuritybrowser.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private AjaxAuthenticationEntryPoint ajaxAuthenticationEntryPoint;
+
+    @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
@@ -27,10 +31,20 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
+            .loginPage("/imooc-signIn.html")
             .and()
             .authorizeRequests()
+            .antMatchers("/imooc-signIn.html")
+            .permitAll()
             .anyRequest()
             .authenticated();
+        /*http.formLogin()
+                .loginProcessingUrl("/login")
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated();*/
+
     }
 
     @Override
