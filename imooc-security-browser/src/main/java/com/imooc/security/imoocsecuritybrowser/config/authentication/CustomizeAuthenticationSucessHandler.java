@@ -1,0 +1,29 @@
+package com.imooc.security.imoocsecuritybrowser.config.authentication;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * @auther: zpd
+ * @Date: 2019/1/22 0022 13:10
+ * @Description:
+ */
+@Component
+public class CustomizeAuthenticationSucessHandler implements AuthenticationSuccessHandler {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        logger.info("~~~~~~~~~ login success ");
+        logger.info("authentication: {}" );
+    }
+}
