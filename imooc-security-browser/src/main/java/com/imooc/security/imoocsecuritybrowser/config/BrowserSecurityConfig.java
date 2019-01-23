@@ -1,5 +1,7 @@
 package com.imooc.security.imoocsecuritybrowser.config;
 
+import com.imooc.security.imoocsecuritybrowser.config.authentication.CustomizeAuthenticationFailureHandler;
+import com.imooc.security.imoocsecuritybrowser.config.authentication.CustomizeAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,20 +30,28 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomizeUserDetailService customizeUserDetailService;
 
+    @Autowired
+    private CustomizeAuthenticationFailureHandler customizeAuthenticationFailureHandler;
+
+    @Autowired
+    private CustomizeAuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
             .loginPage("/authentication/require")
             .loginProcessingUrl("/authentication/form")
+            .successHandler(customizeAuthenticationSuccessHandler)
+            .failureHandler(customizeAuthenticationFailureHandler)
             .and()
             .authorizeRequests()
             .antMatchers("/authentication/require","/imooc-signIn.html")
             .permitAll()
             .anyRequest()
             .authenticated()
-        .and()
-        .csrf()
-        .disable();
+            .and()
+            .csrf()
+            .disable();
         /*http.formLogin()
                 .loginProcessingUrl("/login")
                 .and()
