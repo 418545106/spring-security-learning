@@ -22,7 +22,7 @@ import java.io.IOException;
  * @Description:
  */
 @Component
-public class CustomizeAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomizeAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -31,9 +31,12 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         logger.info("~~~~~~~~~ login success ! !");
         logger.info("authentication: {}", JSON.toJSON(authentication));
 
-        response.setStatus(HttpStatus.OK.value());
-        response.setContentType("application/json;charset=UTF-8");
-        AjaxResultHandler resultHandler = new AjaxResultHandler(HttpStatus.OK,HttpStatus.OK.value(),"login success");
-        response.getWriter().write(JSON.toJSONString(resultHandler));
+        //json返回
+//        response.setStatus(HttpStatus.OK.value());
+//        response.setContentType("application/json;charset=UTF-8");
+//        AjaxResultHandler resultHandler = new AjaxResultHandler(HttpStatus.OK,HttpStatus.OK.value(),"login success");
+//        response.getWriter().write(JSON.toJSONString(resultHandler));
+
+        super.onAuthenticationSuccess(request,response,authentication);
     }
 }

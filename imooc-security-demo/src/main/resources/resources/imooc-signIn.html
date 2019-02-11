@@ -6,34 +6,14 @@
 </head>
 <link rel="icon" href="data:image/ico;base64,aWNv">
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<script>
-    $(function(){
-        $("#loginButton").click(function(){
-            let username = $("input[name=username]").val();
-            let password = $("input[name=password]").val();
-            $.ajax({
-                url:'/authentication/form',
-                type:'post',
-                data:{
-                    username:username,
-                    password:password
-                },
-                success:function(result){
-                    console.log(result);
-                },
-                error:function(result){
-                    console.log(result);
-                    console.log(result.responseJSON);
-                }
-            })
-        })
-    })
-</script>
 <body>
 <h1>login:</h1>
-username:<input type="text" name="username"><br>
-password:<input type="password" name="password"><br>
-<button id="loginButton">login</button>
+<form action="/authentication/form" method="post">
+    username:<input type="text" name="username"><br>
+    password:<input type="password" name="password"><br>
+    图形验证码:<input type="text" name="imageCode"><img src="/code/image?width=200">
+    <button id="loginButton">login</button>
+</form>
 </body>
 
 </html>
