@@ -23,6 +23,8 @@
             <artifactId>imooc-security-core</artifactId>
             <version>${imooc.security.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session -->
+
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
