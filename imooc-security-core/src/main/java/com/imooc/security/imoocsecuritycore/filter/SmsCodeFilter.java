@@ -1,9 +1,9 @@
 package com.imooc.security.imoocsecuritycore.filter;
 
-import com.imooc.security.imoocsecuritycore.exception.ValidateCodeException;
 import com.imooc.security.imoocsecuritycore.properties.SecurityProperties;
 import com.imooc.security.imoocsecuritycore.validate.ValidateCodeProcessor;
-import com.imooc.security.imoocsecuritycore.validate.code.image.ImageCode;
+import com.imooc.security.imoocsecuritycore.validate.code.ValidateCode;
+import com.imooc.security.imoocsecuritycore.exception.ValidateCodeException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ import java.util.Set;
  * @Description:
  */
 @Component
-public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
+public class SmsCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
     @Autowired
-        private AuthenticationFailureHandler customizeAuthenticationFailureHandler;
+    private AuthenticationFailureHandler customizeAuthenticationFailureHandler;
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
@@ -52,11 +52,11 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-        String[] configUrls = StringUtils.split(securityProperties.getCode().getImage().getUrl(),",");
+        String[] configUrls = StringUtils.split(securityProperties.getCode().getSms().getUrl(),",");
         for(String configUrl : configUrls){
             urls.add(configUrl);
         }
-        urls.add("/authentication/form");
+        urls.add("/authentication/mobile");
     }
 
     @Override
@@ -93,11 +93,11 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         /**
          * 根据url获取不同的session_key
          */
-        String session_key = ValidateCodeProcessor.SESSION_KEY_PREFIX+"IMAGE";
+        String session_key = ValidateCodeProcessor.SESSION_KEY_PREFIX+"SMS";
 
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(servletWebRequest, session_key);
+        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(servletWebRequest, session_key);
 
-        String codeInRequest = ServletRequestUtils.getStringParameter(servletWebRequest.getRequest(),"imageCode");
+        String codeInRequest = ServletRequestUtils.getStringParameter(servletWebRequest.getRequest(),"smsCode");
 
         if(StringUtils.isBlank(codeInRequest)){
             throw new ValidateCodeException("验证码不能为空");

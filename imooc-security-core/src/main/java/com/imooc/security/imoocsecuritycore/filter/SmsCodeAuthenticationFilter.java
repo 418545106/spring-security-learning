@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @auther: zpd
  * @Date: 2019/2/18 0018 15:08
- * @Description:
+ * @Description: 主要的短信过滤器链入口 用来产生自定义的短信Token 在之后的自定义 Token认证类中能够进行认证
  */
-public class SmsAuthenticationFilter extends
+public class SmsCodeAuthenticationFilter extends
     AbstractAuthenticationProcessingFilter {
     // ~ Static fields/initializers
     // =====================================================================================
@@ -29,7 +29,7 @@ public class SmsAuthenticationFilter extends
     // ~ Constructors
     // ===================================================================================================
 
-    public SmsAuthenticationFilter() {
+    public SmsCodeAuthenticationFilter() {
         super(new AntPathRequestMatcher("/authentication/mobile", "POST"));
     }
 

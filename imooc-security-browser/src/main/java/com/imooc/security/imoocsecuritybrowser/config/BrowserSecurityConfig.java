@@ -3,6 +3,9 @@ package com.imooc.security.imoocsecuritybrowser.config;
 import com.imooc.security.imoocsecuritybrowser.config.authentication.CustomizeAuthenticationFailureHandler;
 import com.imooc.security.imoocsecuritybrowser.config.authentication.CustomizeAuthenticationSuccessHandler;
 import com.imooc.security.imoocsecuritybrowser.session.CustomizeExpiredSessionStrategy;
+import com.imooc.security.imoocsecuritycore.config.SmsCodeAuthenticationSecurityConfig;
+import com.imooc.security.imoocsecuritycore.filter.SmsCodeAuthenticationFilter;
+import com.imooc.security.imoocsecuritycore.filter.SmsCodeFilter;
 import com.imooc.security.imoocsecuritycore.filter.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -47,11 +50,17 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private ValidateCodeFilter validateCodeFilter;
 
     @Autowired
+    private SmsCodeFilter smsCodeFilter;
+
+    @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+    @Autowired
     private DataSource dataSource;
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository(){
-
+        //用来记录用户token
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
 //        tokenRepository.setCreateTableOnStartup(true);
@@ -63,7 +72,10 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
         validateCodeFilter.afterPropertiesSet();
 
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        smsCodeFilter.afterPropertiesSet();
+
+        http.addFilterBefore(smsCodeFilter,UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/authentication/require")
                 .loginProcessingUrl("/authentication/form")
@@ -76,7 +88,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(customizeUserDetailService)
                 .and()
             .authorizeRequests()
-                .antMatchers("/authentication/require","/imooc-signIn.html","/code/*","/session/invalid")
+                .antMatchers("/authentication/require","/authentication/mobile","/imooc-signIn.html","/code/*","/session/invalid")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -88,7 +100,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .and()
             .csrf()
-            .disable();
+            .disable()
+        .apply(smsCodeAuthenticationSecurityConfig);
         /*http.formLogin()
                 .loginProcessingUrl("/login")
                 .and()
