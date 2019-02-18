@@ -1,7 +1,9 @@
 package com.imooc.security.imoocsecuritycore.config;
 
 import com.imooc.security.imoocsecuritycore.validate.ValidateCodeGenerator;
-import com.imooc.security.imoocsecuritycore.validate.code.ImageCodeGenerator;
+import com.imooc.security.imoocsecuritycore.validate.code.image.ImageCodeGenerator;
+import com.imooc.security.imoocsecuritycore.validate.code.sms.DefaultSmsCodeSender;
+import com.imooc.security.imoocsecuritycore.validate.code.sms.SmsCodeSender;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,5 +25,11 @@ public class ValidateCodeBeanConfig {
     public ValidateCodeGenerator imageCodeGenerator(){
         ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
         return codeGenerator;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(SmsCodeSender.class)
+    public SmsCodeSender smsCodeSender(){
+        return new DefaultSmsCodeSender();
     }
 }

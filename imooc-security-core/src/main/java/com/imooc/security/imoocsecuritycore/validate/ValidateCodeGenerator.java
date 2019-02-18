@@ -1,6 +1,6 @@
 package com.imooc.security.imoocsecuritycore.validate;
 
-import com.imooc.security.imoocsecuritycore.validate.code.ImageCode;
+import com.imooc.security.imoocsecuritycore.validate.code.ValidateCode;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
@@ -10,5 +10,10 @@ import org.springframework.web.context.request.ServletWebRequest;
  */
 public interface ValidateCodeGenerator {
 
-    ImageCode generate(ServletWebRequest request);
+    /**
+     * 生成校验码
+     * @param request
+     * @return
+     */
+    ValidateCode generate(ServletWebRequest request);
 }

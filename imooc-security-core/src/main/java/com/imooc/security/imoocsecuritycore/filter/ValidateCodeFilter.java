@@ -1,9 +1,9 @@
 package com.imooc.security.imoocsecuritycore.filter;
 
-import com.imooc.security.imoocsecuritycore.exception.ValidateCodeException;
+import com.imooc.security.imoocsecuritycore.validate.exception.ValidateCodeException;
 import com.imooc.security.imoocsecuritycore.properties.SecurityProperties;
-import com.imooc.security.imoocsecuritycore.validate.code.ImageCode;
-import com.imooc.security.imoocsecuritycore.validate.controller.ValidateCodeController;
+import com.imooc.security.imoocsecuritycore.validate.ValidateCodeProcessor;
+import com.imooc.security.imoocsecuritycore.validate.code.image.ImageCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,8 +82,19 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         filterChain.doFilter(request,response);
     }
 
+    /**
+     * 验证图片校验码
+     * @param servletWebRequest
+     * @throws ServletRequestBindingException
+     */
     private void validate(ServletWebRequest servletWebRequest) throws ServletRequestBindingException {
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(servletWebRequest, ValidateCodeController.SESSION_KEY);
+
+        /**
+         * 根据url获取不同的session_key
+         */
+        String session_key = ValidateCodeProcessor.SESSION_KEY_PREFIX+StringUtils.substringAfter(servletWebRequest.getRequest().getRequestURI(),"/code/").toUpperCase();
+
+        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(servletWebRequest, session_key);
 
         String codeInRequest = ServletRequestUtils.getStringParameter(servletWebRequest.getRequest(),"imageCode");
 
@@ -96,7 +107,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         }
 
         if(codeInSession.isExpried()){
-            sessionStrategy.removeAttribute(servletWebRequest,ValidateCodeController.SESSION_KEY);
+            sessionStrategy.removeAttribute(servletWebRequest,session_key);
             throw new ValidateCodeException("验证码过期");
         }
 
@@ -104,6 +115,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw new ValidateCodeException("验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(servletWebRequest,ValidateCodeController.SESSION_KEY);
+        sessionStrategy.removeAttribute(servletWebRequest,session_key);
     }
 }

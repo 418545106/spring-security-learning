@@ -1,10 +1,9 @@
 package com.imooc.security.imoocsecuritydemo.config;
 
 import com.imooc.security.imoocsecuritycore.validate.ValidateCodeGenerator;
-import com.imooc.security.imoocsecuritycore.validate.code.ImageCode;
+import com.imooc.security.imoocsecuritycore.validate.code.image.ImageCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**

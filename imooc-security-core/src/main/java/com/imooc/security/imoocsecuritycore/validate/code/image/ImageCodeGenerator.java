@@ -1,4 +1,4 @@
-package com.imooc.security.imoocsecuritycore.validate.code;
+package com.imooc.security.imoocsecuritycore.validate.code.image;
 
 import com.imooc.security.imoocsecuritycore.properties.SecurityProperties;
 import com.imooc.security.imoocsecuritycore.validate.ValidateCodeGenerator;

@@ -1,5 +1,6 @@
-package com.imooc.security.imoocsecuritycore.validate.code;
+package com.imooc.security.imoocsecuritycore.validate.code.image;
 
+import com.imooc.security.imoocsecuritycore.validate.code.ValidateCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,23 +17,13 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ImageCode implements Serializable {
+public class ImageCode extends ValidateCode implements Serializable {
 
     private BufferedImage image;
 
-    private String code;
-
-    private LocalDateTime expireTime;
-
     public ImageCode(BufferedImage image,String code,Integer expireIn){
+        super(code,expireIn);
         this.image = image;
-        this.code = code;
-        this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
-    }
-
-    public boolean isExpried() {
-        return LocalDateTime.now().isAfter(expireTime);
     }
 }

@@ -8,13 +8,34 @@
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <body>
 <h1>login:</h1>
+表单登陆<br>
 <form action="/authentication/form" method="post">
     username:<input type="text" name="username"><br>
     password:<input type="password" name="password"><br>
     图形验证码:<input type="text" name="imageCode"><img src="/code/image?width=200"><br>
     <input name="remember-me" type="checkbox" value="true"/>记住我
     <button id="loginButton">login</button>
+</form><br>
+短信登陆<br>
+<form action="/authentication/mobile" method="post">
+    手机号:<input type="text" name="mobile" value="18106567361"><br>
+    短信验证码:<input type="text" name="smsCode"><a id="getSms" href="/code/sms?mobile=18106567361">发送验证码</a><br>
+    <button type="submit">login</button>
 </form>
-</body>
 
+
+</body>
+<script>
+    /*$(function(){
+        $("#getSms").click(function(){
+            $.ajax({
+                url:'/code/sms?mobile=18106567361',
+                type:'get',
+                success:function(result){
+                    console.log(result);
+                }
+            })
+        })
+    })*/
+</script>
 </html>

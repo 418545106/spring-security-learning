@@ -10,12 +10,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ImageCodeProperties extends SmsCodeProperties{
+public class SmsCodeProperties {
 
-    public ImageCodeProperties(){
-        super.setLength(4);
-    }
+    private Integer length = 6;
+    private Integer expireIn = 60;
 
-    private Integer width = 85;
-    private Integer height = 20;
+    private String url;
 }

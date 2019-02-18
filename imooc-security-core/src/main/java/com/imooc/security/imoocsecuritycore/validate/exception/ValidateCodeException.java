@@ -1,4 +1,4 @@
-package com.imooc.security.imoocsecuritycore.exception;
+package com.imooc.security.imoocsecuritycore.validate.exception;
 
 import org.springframework.security.core.AuthenticationException;
 
