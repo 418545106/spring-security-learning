@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Date: 2019/1/18 0018 10:24
  * @Description: spring自带的拦截器
  */
-@Component
+//@Component
 public class customizeInterceptor implements HandlerInterceptor {
 
     private Logger logger = LoggerFactory.getLogger(customizeInterceptor.class);

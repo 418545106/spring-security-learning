@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.imooc")
-@MapperScan("com.imooc")
+@MapperScan("com.imooc.security.imoocsecuritybrowser.dao")
 @SpringBootApplication
 public class ImoocSecurityDemoApplication {
 
