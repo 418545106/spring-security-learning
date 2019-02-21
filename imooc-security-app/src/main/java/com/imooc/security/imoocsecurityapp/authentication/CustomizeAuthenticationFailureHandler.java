@@ -1,4 +1,4 @@
-package com.imooc.security.imoocsecuritybrowser.config.authentication;
+package com.imooc.security.imoocsecurityapp.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imooc.security.imoocsecuritycore.support.SimpleResponse;
@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 @Component
 public class CustomizeAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 

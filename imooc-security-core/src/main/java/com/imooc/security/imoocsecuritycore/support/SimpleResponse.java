@@ -1,4 +1,4 @@
-package com.imooc.security.imoocsecuritybrowser.support;
+package com.imooc.security.imoocsecuritycore.support;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

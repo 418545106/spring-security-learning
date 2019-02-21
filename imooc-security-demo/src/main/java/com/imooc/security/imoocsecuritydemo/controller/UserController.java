@@ -1,7 +1,6 @@
 package com.imooc.security.imoocsecuritydemo.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.imooc.security.imoocsecuritybrowser.service.TestService;
 import com.imooc.security.imoocsecuritydemo.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +24,8 @@ public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
-    private TestService testService;
+//    @Autowired
+//    private TestService testService;
 
     @GetMapping
     @JsonView(User.UserSimpleView.class)
@@ -86,9 +85,9 @@ public class UserController {
         logger.info("--------------->delete id : {}",userId);
     }
 
-    @GetMapping("/test")
-    public void test(){
-        String str = testService.testFunction();
-        logger.info("###################### {}",str);
-    }
+//    @GetMapping("/test")
+//    public void test(){
+//        String str = testService.testFunction();
+//        logger.info("###################### {}",str);
+//    }
 }
