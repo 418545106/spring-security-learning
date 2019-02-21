@@ -24,11 +24,6 @@ import java.util.Map;
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
 
     /**
-     * 操作session的工具类
-     */
-    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
-
-    /**
      * 对session中的验证码操作
      */
     @Autowired
@@ -66,7 +61,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      */
     private void save(ServletWebRequest request, C validateCode){
         ValidateCode code = new ValidateCode(validateCode.getCode(),validateCode.getExpireTime());
-        sessionStrategy.setAttribute(request,SESSION_KEY_PREFIX+getProcessorType(request).toUpperCase(),code);
+        validateCodeRepository.save(request,code,getValidateCodeType(request));
     }
 
     /**

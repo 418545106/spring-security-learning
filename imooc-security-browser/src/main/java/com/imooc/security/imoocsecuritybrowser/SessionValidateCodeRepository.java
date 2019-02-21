@@ -1,4 +1,4 @@
-package com.imooc.security.imoocsecuritycore.validate.impl;
+package com.imooc.security.imoocsecuritybrowser;
 
 import com.imooc.security.imoocsecuritycore.validate.ValidateCodeRepository;
 import com.imooc.security.imoocsecuritycore.validate.code.ValidateCode;

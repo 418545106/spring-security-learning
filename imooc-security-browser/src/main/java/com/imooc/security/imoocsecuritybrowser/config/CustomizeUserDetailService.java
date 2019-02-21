@@ -31,7 +31,7 @@ public class CustomizeUserDetailService implements UserDetailsService {
         String password = userDao.getUserByName(username);
         String res = new BCryptPasswordEncoder().encode(password);
         logger.info("---------- encoding password : {}",res);
-        return new User(username, res , AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        return new User(username, res , AuthorityUtils.commaSeparatedStringToAuthorityList("admin:dept","admin"));
 //        return new User(username, password , AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
     }
 

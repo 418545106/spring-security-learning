@@ -28,7 +28,7 @@ public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapt
     private AuthenticationSuccessHandler customizeAuthenticationSuccessHandler;
 
     @Autowired
-    private UserDetailsService customizeUserDetailService;
+    private UserDetailsService demoUserDetailsService;
 
     @Override
     public void configure(HttpSecurity builder) throws Exception {
@@ -38,7 +38,7 @@ public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapt
         smsCodeAuthenticationFilter.setAuthenticationFailureHandler(customizeAuthenticationFailureHandler);
 
         SmsCodeAuthenticationProvider smsCodeAuthenticationProvider = new SmsCodeAuthenticationProvider();
-        smsCodeAuthenticationProvider.setUserDetailsService(customizeUserDetailService);
+        smsCodeAuthenticationProvider.setUserDetailsService(demoUserDetailsService);
 
         builder.authenticationProvider(smsCodeAuthenticationProvider)
             .addFilterAfter(smsCodeAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

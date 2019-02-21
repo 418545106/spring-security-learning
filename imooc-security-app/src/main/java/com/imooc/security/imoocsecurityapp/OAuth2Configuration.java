@@ -1,6 +1,7 @@
 package com.imooc.security.imoocsecurityapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -19,12 +20,19 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     @Autowired
     public PasswordEncoder passwordEncoder;
 
+    /**
+     * 注入authenticationManager
+     * 来支持 password grant type
+     */
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
             .withClient("yueqi")
             .secret("client-secret-yueqi")
-            .authorizedGrantTypes("authorization_code", "refresh_token")
+            .authorizedGrantTypes("authorization_code","password", "refresh_token")
             .scopes("all")
             .redirectUris("http://example.com");
     }
@@ -36,6 +44,6 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        super.configure(endpoints);
+        endpoints.authenticationManager(authenticationManager);
     }
 }
