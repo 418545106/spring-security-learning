@@ -46,7 +46,7 @@ public class CustomizeAspect {
         try {
             logger.info("------------>Class Name: {}" , className);
             logger.info("------------>Method Name: {}" , methodName);
-            logger.info("------------>input parameter: {}" , JSON.toJSONString(joinPoint.getArgs()));
+            //logger.info("------------>input parameter: {}" , JSON.toJSONString(joinPoint.getArgs()));
             result = joinPoint.proceed();
         } catch (Throwable e) {
             logger.error("------------>Have Exception , Class Name: {} ,Method Name: {}" ,className,methodName);

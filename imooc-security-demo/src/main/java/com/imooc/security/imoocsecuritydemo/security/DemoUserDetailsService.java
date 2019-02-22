@@ -37,6 +37,7 @@ public class DemoUserDetailsService implements UserDetailsService, SocialUserDet
 		// 根据用户名查找用户信息
 		//根据查找到的用户信息判断用户是否被冻结
 		String password = passwordEncoder.encode("123456");
+//        String password = "123456";
 		logger.info("数据库密码是:"+password);
 
 		return new SocialUser(userId, password,
