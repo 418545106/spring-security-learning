@@ -81,7 +81,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
 
         ValidateCodeType codeType = getValidateCodeType(request);
 
-        C codeInSession = (C) validateCodeRepository.get(request, codeType);
+        C codeInServer = (C) validateCodeRepository.get(request, codeType);
 
         String codeInRequest;
         try {
@@ -95,16 +95,16 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
             throw new ValidateCodeException(codeType + "验证码的值不能为空");
         }
 
-        if (codeInSession == null) {
+        if (codeInServer == null) {
             throw new ValidateCodeException(codeType + "验证码不存在");
         }
 
-        if (codeInSession.isExpried()) {
+        if (codeInServer.isExpried()) {
             validateCodeRepository.remove(request, codeType);
             throw new ValidateCodeException(codeType + "验证码已过期");
         }
 
-        if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
+        if (!StringUtils.equals(codeInServer.getCode(), codeInRequest)) {
             throw new ValidateCodeException(codeType + "验证码不匹配");
         }
 

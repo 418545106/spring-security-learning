@@ -7,7 +7,7 @@
 		<module>imooc-security-browser</module>
         <module>imooc-security-core</module>
         <module>imooc-security-demo</module>
-        <module>sso-demo</module>
+        <!--<module>sso-demo</module>-->
     </modules>
 
     <parent>
