@@ -23,11 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @Date: 2019/1/15 0015 16:29
  * @Description:
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class UserControllerTest {
 
-    @Autowired
+    /*@Autowired
     private WebApplicationContext wac;
 
     private MockMvc mockMvc;
@@ -39,10 +39,10 @@ public class UserControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
     }
 
-    /**
+    *//**
      * 测试接口返回json对象数组长度为3
      * @throws Exception
-     */
+     *//*
     @Test
     public void whenQuerySuccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user")
@@ -51,10 +51,10 @@ public class UserControllerTest {
             .andExpect(jsonPath("$.length()").value(3));
     }
 
-    /**
+    *//**
      * 测试Get方法user接口返回userName 是 uuz
      * @throws Exception
-     */
+     *//*
     @Test
     public void whenGetInfoSuccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/1")
@@ -63,10 +63,10 @@ public class UserControllerTest {
             .andExpect(jsonPath("$.userName").value("uuz"));
     }
 
-    /**
+    *//**
      * 测试Get方法user接口只接收 int/long 型参数
      * @throws Exception
-     */
+     *//*
     @Test
     public void whenGetInfoFail() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/abc")
@@ -74,10 +74,10 @@ public class UserControllerTest {
             .andExpect(status().is4xxClientError());
     }
 
-    /**
+    *//**
      * 测试JsonView视图配置测试数据，在使用全部查询时，不应该输出用户的密码
      * @throws Exception
-     */
+     *//*
     @Test
     public void whenSimpleQuerySuccessResponse() throws Exception {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/user")
@@ -87,10 +87,10 @@ public class UserControllerTest {
         logger.info("--------------->Simple Json result: {}",result);
     }
 
-    /**
+    *//**
      * 测试JsonView视图配置测试数据，在使用详情查询时，应该输出用户的密码
      * @throws Exception
-     */
+     *//*
     @Test
     public void whenDetailQuerySuccessResponse() throws Exception {
         String result = mockMvc.perform(MockMvcRequestBuilders.get("/user/1")
@@ -108,6 +108,6 @@ public class UserControllerTest {
         .content("{\"userName\":\"uuz\",\"password\":null}"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.userId").value(10));
-    }
+    }*/
 
 }

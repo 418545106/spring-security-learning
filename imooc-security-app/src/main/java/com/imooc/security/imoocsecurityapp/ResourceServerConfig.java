@@ -1,5 +1,6 @@
 package com.imooc.security.imoocsecurityapp;
 
+import com.imooc.security.imoocsecuritycore.authorize.AuthorizeConfigManager;
 import com.imooc.security.imoocsecuritycore.config.SecurityConstants;
 import com.imooc.security.imoocsecuritycore.config.SmsCodeAuthenticationSecurityConfig;
 import com.imooc.security.imoocsecuritycore.config.ValidateCodeSecurityConfig;
@@ -33,6 +34,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
     /**
      * 配置关于验证码验证过滤器
      */
@@ -52,17 +56,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .and()
             .apply(smsCodeAuthenticationSecurityConfig)
             .and()
-            .authorizeRequests()
-            .antMatchers(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                SecurityConstants.DEFAULT_UNAUTHENTICATED_URL,
-                securityProperties.getBrowser().getSignInPage(),
-                SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*","/session/invalid")
-            .permitAll()
-            .anyRequest()
-            .authenticated()
-            .and()
             .csrf()
             .disable();
+
+        authorizeConfigManager.configure(http.authorizeRequests());
     }
 
 }

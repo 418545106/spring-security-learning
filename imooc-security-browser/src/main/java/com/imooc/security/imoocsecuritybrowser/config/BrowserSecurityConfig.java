@@ -3,6 +3,7 @@ package com.imooc.security.imoocsecuritybrowser.config;
 import com.imooc.security.imoocsecuritybrowser.config.authentication.CustomizeAuthenticationFailureHandler;
 import com.imooc.security.imoocsecuritybrowser.config.authentication.CustomizeAuthenticationSuccessHandler;
 import com.imooc.security.imoocsecuritybrowser.session.CustomizeExpiredSessionStrategy;
+import com.imooc.security.imoocsecuritycore.authorize.AuthorizeConfigManager;
 import com.imooc.security.imoocsecuritycore.config.FormAuthenticationConfig;
 import com.imooc.security.imoocsecuritycore.config.SecurityConstants;
 import com.imooc.security.imoocsecuritycore.config.SmsCodeAuthenticationSecurityConfig;
@@ -31,10 +32,13 @@ import javax.sql.DataSource;
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Bean
+    /*@Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
-    }
+    }*/
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private CustomizeUserDetailService customizeUserDetailService;
@@ -60,6 +64,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private FormAuthenticationConfig formAuthenticationConfig;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
     @Bean
     public PersistentTokenRepository persistentTokenRepository(){
         //用来记录用户token
@@ -84,15 +91,6 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
                 .userDetailsService(customizeUserDetailService)
                 .and()
-            .authorizeRequests()
-                .antMatchers(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                    SecurityConstants.DEFAULT_UNAUTHENTICATED_URL,
-                    securityProperties.getBrowser().getSignInPage(),
-                    SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*","/session/invalid")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
             /*.sessionManagement()
                 .invalidSessionUrl("/session/invalid")
                 .maximumSessions(1)
@@ -101,10 +99,12 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()*/
             .csrf()
             .disable();
+
+        authorizeConfigManager.configure(http.authorizeRequests());
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customizeUserDetailService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(customizeUserDetailService).passwordEncoder(passwordEncoder);
     }
 }

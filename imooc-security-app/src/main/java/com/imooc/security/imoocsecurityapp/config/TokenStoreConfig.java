@@ -44,13 +44,21 @@ public class TokenStoreConfig {
         @Autowired
         private SecurityProperties securityProperties;
 
+        @Autowired
+        private RedisConnectionFactory redisConnectionFactory;
+
         /**
          * TokenStore 只关乎存取
          * @return
          */
+//        @Bean
+//        public TokenStore jwtTokenStore(){
+//            return new JwtTokenStore(jwtAccessTokenConverter());
+//        }
+
         @Bean
         public TokenStore jwtTokenStore(){
-            return new JwtTokenStore(jwtAccessTokenConverter());
+            return new RedisTokenStore(redisConnectionFactory);
         }
 
         @Bean
@@ -64,7 +72,7 @@ public class TokenStoreConfig {
         @Bean
         @ConditionalOnMissingBean(name="jwtTokenEnhancer")
         public TokenEnhancer jwtTokenEnhancer(){
-            return new CustomJwtTokenEnhancer();
+            return new CustomJwtTokenEnhancer(securityProperties.getOauth2().getJwtSigningKey());
         }
     }
 

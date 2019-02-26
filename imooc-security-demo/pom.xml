@@ -22,6 +22,12 @@
             <groupId>com.imooc.security</groupId>
             <artifactId>imooc-security-browser</artifactId>
             <version>${imooc.security.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.imooc.security</groupId>
+            <artifactId>imooc-security-authority</artifactId>
+            <version>${imooc.security.version}</version>
         </dependency>-->
 
         <dependency>
