@@ -1,6 +1,7 @@
 package com.imooc.security.imoocsecuritydemo.security;
 
 import com.imooc.security.imoocsecuritycore.authorize.AuthorizeConfigProvider;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Component;
  * @Date: 2019/2/26 0026 14:02
  * @Description:
  */
-//@Component
+@Component
+@Order(value = Integer.MAX_VALUE)
 public class DemoAuthorizeConfigProvider implements AuthorizeConfigProvider {
 
 
