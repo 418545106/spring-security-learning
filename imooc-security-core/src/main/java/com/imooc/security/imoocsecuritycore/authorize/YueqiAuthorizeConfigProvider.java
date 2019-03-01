@@ -4,9 +4,11 @@ import com.imooc.security.imoocsecuritycore.config.SecurityConstants;
 import com.imooc.security.imoocsecuritycore.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsUtils;
 
 /**
  * @auther: zpd
@@ -26,7 +28,7 @@ public class YueqiAuthorizeConfigProvider implements AuthorizeConfigProvider{
         SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
             SecurityConstants.DEFAULT_UNAUTHENTICATED_URL,
             securityProperties.getBrowser().getSignInPage(),
-            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*","/session/invalid"
+            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*","/session/invalid","/oauth/**"
         ).permitAll();
     }
 }

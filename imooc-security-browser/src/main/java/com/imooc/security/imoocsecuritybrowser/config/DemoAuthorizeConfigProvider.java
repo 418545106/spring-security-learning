@@ -1,4 +1,4 @@
-package com.imooc.security.imoocsecuritydemo.security;
+package com.imooc.security.imoocsecuritybrowser.config;
 
 import com.imooc.security.imoocsecuritycore.authorize.AuthorizeConfigProvider;
 import org.springframework.core.annotation.Order;

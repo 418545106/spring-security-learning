@@ -18,13 +18,6 @@ import java.util.Map;
  */
 public class CustomJwtTokenEnhancer implements TokenEnhancer{
 
-    public CustomJwtTokenEnhancer(String key){
-        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
-        //可以实现密签
-        accessTokenConverter.setSigningKey(key);
-//        return accessTokenConverter;
-    }
-
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 

@@ -14,7 +14,7 @@ import java.util.Set;
  * @Date: 2019/2/26 0026 15:41
  * @Description:
  */
-@Component
+@Component("rbacServiceImpl")
 public class RbacServiceImpl implements RbacService{
 
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -31,7 +31,7 @@ public class RbacServiceImpl implements RbacService{
             //.....
             //cache
             Set<String> urls = new HashSet<>();
-            urls.add("");
+            urls.add("/user");
             for(String url: urls){
                 if(antPathMatcher.match(url,request.getRequestURI())){
                     hasPermission = true;

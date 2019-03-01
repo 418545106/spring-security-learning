@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * @auther: zpd
@@ -46,6 +48,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
+
         http.formLogin()
             .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATED_URL)
             .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)
@@ -57,6 +60,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
             .apply(smsCodeAuthenticationSecurityConfig)
             .and()
             .csrf()
+            .disable()
+            .cors()
             .disable();
 
         authorizeConfigManager.configure(http.authorizeRequests());

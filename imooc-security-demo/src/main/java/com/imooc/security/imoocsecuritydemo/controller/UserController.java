@@ -31,9 +31,6 @@ public class UserController {
 
     private Logger logger = LoggerFactory.getLogger(UserController.class);
 
-//    @Autowired
-//    private TestService testService;
-
     @Autowired
     private SecurityProperties securityProperties;
 

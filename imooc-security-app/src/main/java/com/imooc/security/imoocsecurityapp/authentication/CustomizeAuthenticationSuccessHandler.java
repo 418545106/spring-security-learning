@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
@@ -63,7 +64,7 @@ public class CustomizeAuthenticationSuccessHandler extends SavedRequestAwareAuth
 
         if(clientDetails == null){
             throw new UnapprovedClientAuthenticationException("clientId对应配置信息不存在:"+clientId);
-        }else if(!StringUtils.equals(clientDetails.getClientSecret(),clientSecret)){
+        }else if(!StringUtils.equals(clientDetails.getClientSecret(), clientSecret)){
             throw new UnapprovedClientAuthenticationException("clientSecret不匹配:"+clientId);
         }
         //生成 TokenRequest
@@ -78,7 +79,7 @@ public class CustomizeAuthenticationSuccessHandler extends SavedRequestAwareAuth
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(objectMapper.writeValueAsString(oAuth2AccessToken));
     }
-    /**
+    /**解密header中的参数
      * Decodes the header into a username and password.
      *
      * @throws BadCredentialsException if the Basic header is not present or is not valid

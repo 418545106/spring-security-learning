@@ -72,7 +72,7 @@ public class TokenStoreConfig {
         @Bean
         @ConditionalOnMissingBean(name="jwtTokenEnhancer")
         public TokenEnhancer jwtTokenEnhancer(){
-            return new CustomJwtTokenEnhancer(securityProperties.getOauth2().getJwtSigningKey());
+            return new CustomJwtTokenEnhancer();
         }
     }
 
