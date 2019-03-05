@@ -32,6 +32,8 @@ public class RbacServiceImpl implements RbacService{
             //cache
             Set<String> urls = new HashSet<>();
             urls.add("/user");
+            urls.add("/");
+            urls.add("/index");
             for(String url: urls){
                 if(antPathMatcher.match(url,request.getRequestURI())){
                     hasPermission = true;

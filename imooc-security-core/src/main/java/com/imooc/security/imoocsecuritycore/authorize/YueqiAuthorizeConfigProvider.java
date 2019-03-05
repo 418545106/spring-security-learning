@@ -29,6 +29,8 @@ public class YueqiAuthorizeConfigProvider implements AuthorizeConfigProvider{
             SecurityConstants.DEFAULT_UNAUTHENTICATED_URL,
             securityProperties.getBrowser().getSignInPage(),
             SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*","/session/invalid","/oauth/**"
-        ).permitAll();
+        ).permitAll()
+            .anyRequest()
+            .access("@rbacServiceImpl.hasPermission(request, authentication)");
     }
 }

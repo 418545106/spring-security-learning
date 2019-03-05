@@ -8,8 +8,12 @@ import com.imooc.security.imoocsecuritycore.validate.ValidateCodeRepository;
 import com.imooc.security.imoocsecuritycore.validate.code.ValidateCode;
 import com.imooc.security.imoocsecuritycore.validate.code.ValidateCodeType;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -26,13 +30,15 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisValidateCodeRepository implements ValidateCodeRepository {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Autowired
 	private RedisTemplate<Object, Object> redisTemplate;
 
 	@Override
 	public void save(ServletWebRequest request, ValidateCode code, ValidateCodeType type) {
-	    redisTemplate.opsForValue().set("1","2");
-//        redisTemplate.opsForValue().set(buildKey(request, type), code, 30, TimeUnit.MINUTES);
+//	    redisTemplate.opsForValue().set("1","2");
+        redisTemplate.opsForValue().set(buildKey(request, type), code, 30, TimeUnit.MINUTES);
     }
 
 	@Override
@@ -65,7 +71,9 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
 		if (StringUtils.isBlank(mobile)) {
 			throw new ValidateCodeException("请在请求中携带mobile参数");
 		}
-		return "code:" + type.toString().toLowerCase() + ":" + mobile;
+		String key = "code:" + type.toString().toLowerCase() + ":" + mobile;
+        logger.info("redis中的key为：{}",key);
+		return key;
 	}
 
 }

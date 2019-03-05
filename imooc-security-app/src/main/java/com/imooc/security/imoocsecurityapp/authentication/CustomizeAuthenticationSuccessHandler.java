@@ -43,6 +43,9 @@ public class CustomizeAuthenticationSuccessHandler extends SavedRequestAwareAuth
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         logger.info("~~~~~~~~~ login success ! !");
@@ -64,7 +67,7 @@ public class CustomizeAuthenticationSuccessHandler extends SavedRequestAwareAuth
 
         if(clientDetails == null){
             throw new UnapprovedClientAuthenticationException("clientId对应配置信息不存在:"+clientId);
-        }else if(!StringUtils.equals(clientDetails.getClientSecret(), clientSecret)){
+        }else if(passwordEncoder.matches(clientDetails.getClientSecret(),clientSecret)){
             throw new UnapprovedClientAuthenticationException("clientSecret不匹配:"+clientId);
         }
         //生成 TokenRequest
